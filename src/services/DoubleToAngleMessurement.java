@@ -4,6 +4,6 @@ import dto.AngleMessurement;
 
 public class DoubleToAngleMessurement {
 
-    
+
 
 }
