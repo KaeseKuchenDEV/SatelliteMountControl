@@ -1,6 +1,11 @@
 import api.ApiRequest;
+import dto.SatellitePosition;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import services.UnixTimeConverter;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
@@ -15,11 +20,13 @@ public class Main {
         System.out.println(satName);
 
         JSONArray arr = obj.getJSONArray("positions");
-        for(int i = 0; i < arr.length(); i++){
-            float rightAscension = arr.getJSONObject(i).getFloat("ra");
-            // Prints i.e "86.75657"
-            System.out.println(rightAscension);
+        Queue<SatellitePosition> positionQueue = new LinkedList<>();
+
+        // A small buffer of 10 positions
+        for(int i = 10; i < arr.length(); i++){
+            positionQueue.add(SatellitePosition.fromJSONObject(arr.getJSONObject(i)));
         }
+
 
     }
 }
