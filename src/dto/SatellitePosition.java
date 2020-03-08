@@ -26,6 +26,72 @@ public class SatellitePosition {
         this.timeStamp = timeStamp;
     }
 
+    public String getCalculatedRightAscensionString(){
+        // format is HH:MM:SS
+        StringBuilder raBuilder = new StringBuilder();
+        int hours = (int) rightAscension;
+        // i.e. 57.07 has an amount of minutes of 4.2 but the 0.2 is the amount for the seconds
+        float wholeMinutes = (rightAscension - hours);
+        int minutes = (int) (wholeMinutes * 60);
+        float wholeSeconds = (wholeMinutes - minutes);
+        int seconds = (int) (wholeSeconds * 60);
+
+        // String building
+        if(hours < 10){
+            raBuilder.append(0);
+        }
+        raBuilder.append(hours).append(":");
+
+        if(minutes < 10){
+            raBuilder.append(0);
+        }
+        raBuilder.append(minutes).append(":");
+
+        if(seconds < 10){
+            raBuilder.append("0");
+        }
+        raBuilder.append(seconds);
+
+        return raBuilder.toString();
+    }
+
+    public String getCalculatedDeclinationString(){
+        // Format: sDD*MM:SS (s = omen)
+        StringBuilder decBuilder = new StringBuilder();
+
+        // While the right ascension cannot be negative, the declination can be
+        float absoluteDeclination = Math.abs(declination);
+        int days = (int) absoluteDeclination;
+        float wholeMinutes = (absoluteDeclination - days);
+        int minutes = (int) (wholeMinutes * 60);
+        float wholeSeconds = (wholeMinutes - minutes);
+        int seconds = (int) (wholeSeconds * 60);
+
+        // String building
+        if(absoluteDeclination != declination){
+            decBuilder.append("-");
+        }else {
+            decBuilder.append("+");
+        }
+
+        if(days < 10){
+            decBuilder.append(0);
+        }
+        decBuilder.append(days).append("*");
+
+        if(minutes < 10){
+            decBuilder.append(0);
+        }
+        decBuilder.append(minutes).append(":");
+
+        if(seconds < 10){
+            decBuilder.append("0");
+        }
+        decBuilder.append(seconds);
+
+        return decBuilder.toString();
+    }
+
     public float getRightAscension() {
         return rightAscension;
     }

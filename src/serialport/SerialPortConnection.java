@@ -27,10 +27,14 @@ public class SerialPortConnection {
         return false;
     }
 
-    public void writeToPort(String message) throws SerialPortException{
+    public void writeToPort(String message){
         if(serialPort.isOpened()){
+            try {
                 serialPort.writeBytes(message.getBytes());
-                System.out.println("Sent message: " + message);
+            } catch (SerialPortException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Sent message: " + message);
         }else {
             System.out.println("The serial port has to be opened, before writing to it!");
         }
